@@ -356,6 +356,7 @@ ol {
 }
 
 .person {
+  background-color: rgba(108, 156, 194, .5);
   margin-bottom: 30px;
   border-radius: 12px;
   display: flex;
