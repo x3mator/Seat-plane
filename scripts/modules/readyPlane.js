@@ -1,6 +1,6 @@
 import airplane from './airplane.js';
 
-const readyPlane = (forms, main) => {
+const readyPlane = (forms, main, tourData) => {
   const data = [];
 
   forms.forEach((form) => {
@@ -15,13 +15,13 @@ const readyPlane = (forms, main) => {
         name: form.name.value,
         ticket: form.ticket.value,
       });
-      if (forms.length === data.length) {
-        forms.forEach((form) => form.remove());
-        airplane(main, data);
-      }
-    })
-  });
 
+      if (forms.length === data.length) {
+        forms.forEach(form => form.remove());
+        airplane(main, data, tourData);
+      }
+    });
+  })
 };
 
 export default readyPlane;

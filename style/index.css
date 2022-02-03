@@ -12,10 +12,10 @@ body {
   min-height: 100vh;
   background-image: url('../img/wall.jpg');
   background-image: -webkit-image-set(url('../img/wall.avif') 1x,
-      url('../img/wall.web') 1x,
+      url('../img/wall.webp') 1x,
       url('../img/wall.jpg') 1x);
   background-image: image-set(url('../img/wall.avif') 1x,
-      url('../img/wall.web') 1x,
+      url('../img/wall.webp') 1x,
       url('../img/wall.jpg') 1x);
   background-repeat: no-repeat;
   color: #fff;

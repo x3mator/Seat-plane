@@ -1,55 +1,56 @@
-import createElement from './createElement.js';
+import createElement from "./createElement.js";
+import declOfNum from "./declOfNum.js";
 
-function createCockpit(titleText) {
-  const cockpit = createElement('div', {
-    className: 'cockpit',
+const createCockpit = (titleText) => {
+  const cockpit = createElement("div", {
+    className: "cockpit",
   });
-  const title = createElement('h1', {
-    className: 'cockpit-title',
+  const title = createElement("h1", {
+    className: "cockpit-title",
     textContent: titleText,
   });
-  const button = createElement('button', {
-    className: 'cockpit-confirm',
-    type: 'submit',
-    textContent: 'Подтвердить',
+  const button = createElement("button", {
+    className: "cockpit-confirm",
+    type: "submit",
+    textContent: "Подтвердить",
   });
 
   cockpit.append(title, button);
 
   return cockpit;
-}
+};
 
 const createExit = () => {
-  return createElement('div', {
-    className: 'fuselage exit',
+  return createElement("div", {
+    className: "fuselage exit",
   });
 };
 
 const createBlockSeat = (n, count) => {
-  const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
-  const fuselage = createElement('ol', {
-    className: 'fuselage',
+  const letters = ["A", "B", "C", "D", "E", "F"];
+  const fuselage = createElement("ol", {
+    className: "fuselage",
   });
 
   for (let i = n; i < count + n; i++) {
-    const wrapperRow = createElement('li');
-    const seats = createElement('ol', {
-      className: 'seats',
+    const wrapperRow = createElement("li");
+    const seats = createElement("ol", {
+      className: "seats",
     });
 
-    const seatsRow = letters.map(letter => {
-      const seat = createElement('li', {
-        className: 'seat',
+    const seatsRow = letters.map((letter) => {
+      const seat = createElement("li", {
+        className: "seat",
       });
-      const wrapperCheck = createElement('label');
-      const check = createElement('input', {
-        className: 'seat',
-        type: 'checkbox',
+      const wrapperCheck = createElement("label");
+      const check = createElement("input", {
+        className: "seat",
+        type: "checkbox",
         value: `${i}${letter}`,
       });
 
       wrapperCheck.append(check);
-      seat.append(wrapperCheck)
+      seat.append(wrapperCheck);
       return seat;
     });
 
@@ -60,28 +61,32 @@ const createBlockSeat = (n, count) => {
   }
 
   return fuselage;
-}
+};
 
-function createAirplane(title, scheme) {
-  const choisesSeat = createElement('form', {
-    className: 'choises-seat',
+const createAirplane = (title, tourData) => {
+  const scheme = tourData.scheme;
+
+  const choisesSeat = createElement("form", {
+    className: "choises-seat",
   });
-  const plane = createElement('fieldset', {
-    className: 'plane',
-    name: 'plane',
+
+  const plane = createElement("fieldset", {
+    className: "plane",
+    name: "plane",
   });
-  const cockpit = createCockpit(title)
+
+  const cockpit = createCockpit(title);
 
   let n = 1;
 
   const elements = scheme.map((type) => {
-    if(type === 'exit') {
+    if (type === "exit") {
       return createExit();
     }
 
-    if(typeof type === 'number') {
+    if (typeof type === "number") {
       const blockSeat = createBlockSeat(n, type);
-      n = n + type;
+      n += type;
       return blockSeat;
     }
   });
@@ -90,23 +95,34 @@ function createAirplane(title, scheme) {
   choisesSeat.append(plane);
 
   return choisesSeat;
-}
+};
 
-function createTitle(data) {
-  const seats = data.length;
-  let text;
-  if (seats === 1) text = '1 место'
-    else if (5 > seats && seats > 1) text = `${seats} места`
-      else text = ` ${seats} мест`;
-  return `Выберите ${text}`;
-}
+const checkSeat = (form, data) => {
+  console.log("-> form", form);
+  form.addEventListener("change", () => {
+    const formData = new FormData(form);
+    console.log("-> formData", formData);
+    console.log("-> form", form);
 
-const airplane = (main, data) => {
-  console.log('места: ', data.length)
-  const title = createTitle(data);
-  const scheme = ['exit', 11, 'exit', 1, 'exit', 17, 'exit'];
+    const checked = [...formData].map(item => {
+      console.log(item);
+    })
+  });
+};
 
-  main.append(createAirplane(title, scheme));
+
+const airplane = (main, data, tourData) => {
+  const title = `Выберите ${declOfNum(data.length, [
+    "место",
+    "места",
+    "мест",
+  ])}`;
+
+  const choiseForm = createAirplane(title, tourData);
+
+  checkSeat(choiseForm, data);
+
+  main.append(choiseForm);
 };
 
 export default airplane;
