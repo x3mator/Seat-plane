@@ -98,15 +98,16 @@ const createAirplane = (title, tourData) => {
 };
 
 const checkSeat = (form, data) => {
-  console.log("-> form", form);
+  console.log("1-> form", form);
   form.addEventListener("change", () => {
     const formData = new FormData(form);
-    console.log("-> formData", formData);
-    console.log("-> form", form);
+    console.log("2-> formData", formData);
+    console.log("3-> form", form);
 
     const checked = [...formData].map(item => {
-      console.log(item);
+      console.log("4-> item", item);
     })
+
   });
 };
 
